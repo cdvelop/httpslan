@@ -10,10 +10,9 @@ func (h *httpsLan) GetCertificate(hello *tls.ClientHelloInfo) (*tls.Certificate,
 	fmt.Println("hello tls:", hello)
 
 	if !h.built_cert {
-		err := h.BuildSSlCertificate()
-		if err != "" {
-			return nil, fmt.Errorf(err)
-		}
+
+		h.BuildSSlCertificate()
+
 		h.built_cert = true
 	}
 

@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 )
 
+// os.Getenv("APP_DOMAIN") ej: 192.168.0.1,miapp.cl,localhost
 func AddHttpsLan() (h *httpsLan) {
 	const e = "AddHttpsLan error"
 
