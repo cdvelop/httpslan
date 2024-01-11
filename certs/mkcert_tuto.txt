@@ -1,0 +1,6 @@
+para instalar en windows desde cmd admin
+mkcert -install
+
+generar certificados para servidor local
+mkcert localhost 127.0.0.1 ::1 192.168.0.20 192.168.0.40 172.0.0.1
+

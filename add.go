@@ -1,11 +1,26 @@
 package httpslan
 
- 
-import "github.com/cdvelop/model"
+import (
+	"os"
+	"path/filepath"
+)
 
- func Add(h* model.Handlers) (h *Httpslan, err string) {
+func AddHttpsLan() (h *httpsLan) {
+	const e = "AddHttpsLan error"
 
-h = &Httpslan{}
+	APP_DOMAIN := os.Getenv("APP_DOMAIN")
+	if APP_DOMAIN == "" {
+		APP_DOMAIN = "localhost"
+	}
 
- return h,""
+	const certs_dir = "certs"
+
+	h = &httpsLan{
+		app_domain:         APP_DOMAIN,
+		certs_dir:          certs_dir,
+		publicCertFilePath: filepath.Join(certs_dir, APP_DOMAIN+".pem"),
+		privateKeyFilePath: filepath.Join(certs_dir, APP_DOMAIN+"-key.pem"),
+	}
+
+	return h
 }
