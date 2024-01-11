@@ -4,3 +4,6 @@ mkcert -install
 generar certificados para servidor local
 mkcert localhost 127.0.0.1 ::1 192.168.0.20 192.168.0.40 172.0.0.1
 
+URL=https://www.jasoft.org/Blog/post/como-generar-certificados-https-para-desarrollo-local-que-no-produzcan-errores
+
+https://github.com/FiloSottile/mkcert

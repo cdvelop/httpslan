@@ -8,7 +8,7 @@ import (
 
 func Test_GenerateCert(t *testing.T) {
 
-	cert := httpslan.AddHttpsLan()
+	cert := httpslan.AddHttpsLan(nil)
 
 	cert.BuildSSlCertificate()
 

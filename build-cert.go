@@ -2,8 +2,8 @@ package httpslan
 
 import (
 	"embed"
-	"fmt"
 	"io"
+	"log"
 	"os"
 	"os/exec"
 )
@@ -11,27 +11,28 @@ import (
 //go:embed mkcert.exe
 var embedFS embed.FS
 
-func (h httpsLan) BuildSSlCertificate() {
+func (h *httpsLan) BuildSSlCertificate() {
+	const e = "BuildSSlCertificate error "
 	// Crea un archivo temporal
-	tempFile, err := os.CreateTemp("", "temp_exe_*.exe")
-	if err != nil {
-		fmt.Println("Error creando archivo temporal:", err)
+	tempFile, er := os.CreateTemp("", "temp_exe_*.exe")
+	if er != nil {
+		log.Println(e+"creando archivo temporal:", er)
 		return
 	}
 	defer os.Remove(tempFile.Name())
 
 	// Abre el archivo exe embebido
-	exeFile, err := embedFS.Open("mkcert.exe")
-	if err != nil {
-		fmt.Println("Error abriendo el archivo embebido:", err)
+	exeFile, er := embedFS.Open("mkcert.exe")
+	if er != nil {
+		log.Println(e+"abriendo el archivo embebido:", er)
 		return
 	}
 	defer exeFile.Close()
 
 	// Copia el contenido del exe embebido al archivo temporal
-	_, err = io.Copy(tempFile, exeFile)
-	if err != nil {
-		fmt.Println("Error escribiendo en el archivo temporal:", err)
+	_, er = io.Copy(tempFile, exeFile)
+	if er != nil {
+		log.Println(e+"escribiendo en el archivo temporal:", er)
 		return
 	}
 
@@ -43,11 +44,14 @@ func (h httpsLan) BuildSSlCertificate() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	err = cmd.Run()
-	if err != nil {
-		fmt.Println("Error ejecutando el archivo exe:", err)
+	er = cmd.Run()
+	if er != nil {
+		log.Println(e+"ejecutando el archivo exe:", er)
 		return
 	}
 
-	h.moveCertFiles()
+	err := h.moveCertFiles()
+	if err != "" {
+		log.Println(e + err)
+	}
 }
