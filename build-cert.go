@@ -40,15 +40,21 @@ func (h *httpsLan) BuildSSlCertificate() {
 	tempFile.Close()
 
 	// Ejecuta el archivo exe desde la memoria
-	cmd := exec.Command(tempFile.Name(), h.app_domain)
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	out, er := exec.Command(tempFile.Name(), h.app_domain).CombinedOutput()
+	// cmd.Stdout = os.Stdout
+	// cmd.Stderr = os.Stderr
 
-	er = cmd.Run()
+	// er = cmd.Run()
 	if er != nil {
-		log.Println(e+"ejecutando el archivo exe:", er)
+		log.Println(e+"ejecutando el archivo exe:", er, out)
 		return
 	}
+
+	// string_out := string(out)
+
+	// if string(out)
+
+	// fmt.Println("**SALIDA CREACIÓN CERTIFICADO:", string_out)
 
 	err := h.moveCertFiles()
 	if err != "" {
